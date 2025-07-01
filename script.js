@@ -8,19 +8,33 @@ document.addEventListener('DOMContentLoaded', function() {
     // 네비게이션 링크들을 찾아서 변수에 저장하기
     const navLinks = document.querySelectorAll('.nav-link');
     
-    // 로그인 버튼을 클릭했을 때 실행되는 함수
+    // 로그인 모달 열기/닫기 기능
+    const loginModal = document.getElementById('login-modal');
+    const loginModalClose = document.getElementById('login-modal-close');
     loginBtn.addEventListener('click', function() {
-        // 로그인 버튼을 클릭하면 알림창이 나타나게 하기
-        alert('로그인 기능이 준비 중입니다!');
-        console.log('로그인 버튼이 클릭되었습니다.');
+        loginModal.classList.add('show');
+    });
+    loginModalClose.addEventListener('click', function() {
+        loginModal.classList.remove('show');
+    });
+    // 모달 바깥 클릭 시 닫기
+    window.addEventListener('click', function(e) {
+        if (e.target === loginModal) {
+            loginModal.classList.remove('show');
+        }
     });
     
     // 각 네비게이션 링크에 클릭 이벤트 추가하기
     navLinks.forEach(function(link) {
         link.addEventListener('click', function(event) {
+            const href = this.getAttribute('href');
+            // 외부 링크(https로 시작)면 기본 동작 허용
+            if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+                return; // 기본 동작(새 창 이동) 허용
+            }
             event.preventDefault();
             // a 태그의 href 속성에서 #id 추출
-            const targetId = this.getAttribute('href');
+            const targetId = href;
             if (targetId && targetId.startsWith('#')) {
                 const targetSection = document.querySelector(targetId);
                 if (targetSection) {
