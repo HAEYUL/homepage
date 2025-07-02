@@ -257,6 +257,21 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('예약하기 버튼이 클릭되었습니다.');
         });
     });
+
+    // 모바일 햄버거 메뉴 토글
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileNav = document.querySelector('.mobile-nav');
+    if (mobileMenuBtn && mobileNav) {
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileNav.classList.toggle('show');
+        });
+        // 메뉴 클릭 시 자동 닫힘
+        mobileNav.querySelectorAll('.mobile-nav-link').forEach(function(link) {
+            link.addEventListener('click', function() {
+                mobileNav.classList.remove('show');
+            });
+        });
+    }
 });
 
 // 페이지 로드 상태를 확인하는 함수
